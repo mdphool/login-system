@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 100%;
+            max-width: 380px;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 26px;
+            color: #222;
+        }
+
+        .intro {
+            margin: 0 0 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #555;
+        }
+
+        button {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 6px;
+            background: #222;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <section class="login-box">
+
+            <header>
+                <h1>Welcome Back</h1>
+                <p class="intro">Login to continue to your account.</p>
+            </header>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                    >
+                </div>
+
+                <button type="submit">Login</button>
+
+                <p id="message"></p>
+
+            </form>
+
+        </section>
+    </main>
+
+
+    <script>
+        function login(username, password) {
+
+            let correctUsername = "zayn";
+            let correctPassword = "123456";
+
+            let errors = [];
+
+            if (!username) {
+                errors.push("Username is required");
+            }
+
+            if (!password) {
+                errors.push("Password is required");
+            }
+
+            if (password && password.length < 6) {
+                errors.push("Password must be at least 6 characters");
+            }
+
+            if (username && username !== correctUsername) {
+                errors.push("Wrong username");
+            }
+
+            if (password && password !== correctPassword) {
+                errors.push("Wrong password");
+            }
+
+            if (errors.length > 0) {
+                throw new Error(errors.join(" and "));
+            }
+
+            return "Login Successful";
+        }
+
+
+        const form = document.getElementById("loginForm");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            try {
+
+                const result = login(username, password);
+
+                message.textContent = result;
+                message.style.color = "green";
+
+                console.log(result);
+            }
+
+            catch(error) {
+
+                message.textContent = "Login Error: " + error.message;
+                message.style.color = "red";
+
+                console.log("Login Error:", error.message);
+            }
+
+            finally {
+
+                console.log("Login Process finished");
+            }
+        });
+    </script>
+
+</body>
+</html>
